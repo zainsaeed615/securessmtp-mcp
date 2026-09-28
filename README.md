@@ -60,3 +60,86 @@ the WordPress plugin and REST API use.
 - Website: https://securessmtp.com
 - API docs: https://securessmtp.com/docs/api
 - Support: https://securessmtp.com/contact
+
+## Connect from any MCP client
+
+The server is remote (Streamable HTTP). Use OAuth (a browser approval) or send your
+site API key as a Bearer header. Endpoint: `https://securessmtp.com/api/mcp`
+
+### Claude Code (CLI)
+
+```bash
+claude mcp add --transport http securessmtp https://securessmtp.com/api/mcp
+# with an API key instead of OAuth:
+claude mcp add --transport http securessmtp https://securessmtp.com/api/mcp \
+  --header "Authorization: Bearer <your-site-api-key>"
+```
+
+### Cursor — `~/.cursor/mcp.json` (or `.cursor/mcp.json` in a project)
+
+```json
+{
+  "mcpServers": {
+    "securessmtp": {
+      "url": "https://securessmtp.com/api/mcp"
+    }
+  }
+}
+```
+
+With an API key instead of OAuth, add headers:
+
+```json
+{
+  "mcpServers": {
+    "securessmtp": {
+      "url": "https://securessmtp.com/api/mcp",
+      "headers": { "Authorization": "Bearer <your-site-api-key>" }
+    }
+  }
+}
+```
+
+### VS Code (GitHub Copilot) — `.vscode/mcp.json`
+
+```json
+{
+  "servers": {
+    "securessmtp": {
+      "type": "http",
+      "url": "https://securessmtp.com/api/mcp"
+    }
+  }
+}
+```
+
+### Codex CLI, Claude Desktop, Windsurf, Cline (stdio clients)
+
+Clients that only speak stdio connect through the `mcp-remote` bridge, which also
+handles the OAuth browser flow for you.
+
+Codex CLI — `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.securessmtp]
+command = "npx"
+args = ["-y", "mcp-remote", "https://securessmtp.com/api/mcp"]
+```
+
+Claude Desktop / Windsurf / Cline — the JSON `mcpServers` block:
+
+```json
+{
+  "mcpServers": {
+    "securessmtp": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://securessmtp.com/api/mcp"]
+    }
+  }
+}
+```
+
+### Getting an API key
+
+Sign in at [securessmtp.com](https://securessmtp.com), open a site, and copy its API key.
+OAuth needs no key — you approve access in the browser and pick which site to grant.
