@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "com.securessmtp/securessmtp",
+  "description": "Drive a SecureSMTP account by natural language: send mail, manage sending domains, check delivery analytics.",
+  "status": "active",
+  "version": "1.0.0",
+  "websiteUrl": "https://securessmtp.com",
+  "repository": {
+    "url": "https://github.com/zainsaeed615/securessmtp-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://securessmtp.com/api/mcp"
+    }
+  ]
+}
